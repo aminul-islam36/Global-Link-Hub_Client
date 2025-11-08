@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default;
+}
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: blue;
+  --color-accent: #efa765;
+  --color-secondary: teal;
+}
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+
+* {
+  font-family: "DM Sans", sans-serif;
+}
+ul li a {
+  @apply text-lg font-semibold;
+}
+ul li a.active {
+  @apply text-accent;
+}
