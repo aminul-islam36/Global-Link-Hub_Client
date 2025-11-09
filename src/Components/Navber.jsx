@@ -6,7 +6,6 @@ import Loading from "./Loading";
 
 const Navber = () => {
   const { setUser, user, logOutFunc, loading } = useContext(AuthContext);
-  console.log(user);
 
   const links = (
     <>
@@ -20,11 +19,15 @@ const Navber = () => {
         <NavLink to="/myProducts">My Products</NavLink>
       </li>
       <li>
-        <NavLink to="/login">Login</NavLink>
+        <NavLink to="/newProduct">New Product</NavLink>
       </li>
-      <li>
-        <NavLink to="/register">Register</NavLink>
-      </li>
+      {user ? (
+        ""
+      ) : (
+        <li>
+          <NavLink to="/register">Register</NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -80,9 +83,35 @@ const Navber = () => {
           {loading ? (
             <Loading />
           ) : user ? (
-            <button onClick={logOutUserHandle} className="btn">
-              LogOut
-            </button>
+            <div className="flex items-center gap-3">
+              <div className="dropdown dropdown-center">
+                <div tabIndex={0} role="button" className="avatar">
+                  <div className="w-12 rounded-full border border-gray-300 cursor-pointer">
+                    <img
+                      src={
+                        user.photoURL ||
+                        "https://img.freepik.com/premium-vector/user-icon-icon_1076610-59410.jpg"
+                      }
+                      alt="User"
+                    />
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content mt-3 z-10 p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li className="text-center font-semibold text-gray-700">
+                    {user.displayName || "Anonymous"}
+                  </li>
+                </ul>
+              </div>
+              <button
+                onClick={logOutUserHandle}
+                className="btn btn-accent text-white"
+              >
+                Log Out
+              </button>
+            </div>
           ) : (
             <Link to="login" className="btn">
               Login

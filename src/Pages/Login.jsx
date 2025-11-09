@@ -1,9 +1,14 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AuthContext from "../Contexts/AuthContext";
 
 const Login = () => {
+  const [show, setShow] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location);
+
   const { loginWithEmailPass, userWithGoogle, setUser, setLoading } =
     useContext(AuthContext);
   const loginhandle = (e) => {
@@ -18,6 +23,7 @@ const Login = () => {
         console.log(data);
         setUser(data.user);
         setLoading(false);
+        navigate(location.pathname || "/");
         toast.success("Login successfull !");
       })
       .catch((err) => {
@@ -31,6 +37,7 @@ const Login = () => {
       console.log(data.user);
       setUser(data.user);
       setLoading(false);
+      navigate(location.state || "/");
       toast.success("Login successfull !");
     });
   };
@@ -48,19 +55,31 @@ const Login = () => {
                   <input
                     type="email"
                     name="email"
+                    required
                     className="input"
                     placeholder="Your Email..."
                   />
                   {/* Password  */}
                   <label className="label">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    className="input"
-                    placeholder="******"
-                  />
+                  <div className="relative">
+                    <input
+                      type={show ? "text" : "password"}
+                      name="password"
+                      required
+                      className="input"
+                      placeholder="******"
+                    />
+                    <span
+                      onClick={() => setShow(!show)}
+                      className="absolute top-1/2 -translate-y-1/2 right-6 cursor-pointer z-20"
+                    >
+                      {show ? "Hide" : "Show"}
+                    </span>
+                  </div>
 
-                  <button className="btn btn-neutral mt-4">Login</button>
+                  <button className="btn btn-accent text-white mt-4">
+                    Login
+                  </button>
                 </fieldset>
               </form>
 

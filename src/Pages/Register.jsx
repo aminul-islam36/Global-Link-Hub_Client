@@ -1,9 +1,11 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../Contexts/AuthContext";
 import { toast } from "react-toastify";
 
 const Register = () => {
+  const [show, setShow] = useState(false);
+  const navigate = useNavigate();
   const { registerWithEmailPass, userWithGoogle, setUser, setLoading } =
     useContext(AuthContext);
 
@@ -19,6 +21,7 @@ const Register = () => {
         console.log(data);
         setUser(data.user);
         setLoading(false);
+        navigate("/");
         toast.success("register successfull !");
       })
       .catch((err) => {
@@ -32,6 +35,7 @@ const Register = () => {
       console.log(data.user);
       setUser(data.user);
       setLoading(false);
+      navigate("/");
       toast.success("register successfull !");
     });
   };
@@ -40,7 +44,7 @@ const Register = () => {
     <div>
       <div className="hero bg-base-200 min-h-screen">
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <div className="card-body">
+          <div className="card-body py-12">
             <h2 className="text-center font-semibold text-xl">Register Now</h2>
             <form onSubmit={handleNewUser}>
               <fieldset className="fieldset">
@@ -49,6 +53,7 @@ const Register = () => {
                 <input
                   type="text"
                   name="name"
+                  required
                   className="input"
                   placeholder="Your Name..."
                 />
@@ -65,19 +70,30 @@ const Register = () => {
                 <input
                   type="email"
                   name="email"
+                  required
                   className="input"
                   placeholder="Your Email..."
                 />
-                {/* Password  */}
                 <label className="label">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  className="input"
-                  placeholder="******"
-                />
+                <div className="relative">
+                  <input
+                    type={show ? "text" : "password"}
+                    name="password"
+                    required
+                    className="input"
+                    placeholder="******"
+                  />
+                  <span
+                    onClick={() => setShow(!show)}
+                    className="absolute top-1/2 -translate-y-1/2 right-6 cursor-pointer z-20"
+                  >
+                    {show ? "Hide" : "Show"}
+                  </span>
+                </div>
 
-                <button className="btn btn-neutral mt-4">Register</button>
+                <button className="btn btn-accent text-white mt-4">
+                  Register
+                </button>
               </fieldset>
             </form>
             <p>
