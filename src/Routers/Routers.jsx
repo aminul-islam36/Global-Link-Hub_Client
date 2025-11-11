@@ -11,6 +11,7 @@ import Details from "../Pages/Details";
 import MyExport from "../Pages/MyExport";
 import AddProduct from "../Pages/AddProduct";
 import MyImport from "../Pages/MyImport";
+import ViewDetails from "../Pages/ViewDetails";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,12 @@ const router = createBrowserRouter([
       {
         path: "/addProduct",
         element: <AddProduct />,
+      },
+      {
+        path: "/viewDetails/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/importedProducts/${params.id}`),
+        element: <ViewDetails></ViewDetails>,
       },
       {
         path: "/details/:id",

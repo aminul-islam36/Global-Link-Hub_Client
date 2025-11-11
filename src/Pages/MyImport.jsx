@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import AuthContext from "../Contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 const MyImport = () => {
   const { user } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:5000/products?email=${user.email}`)
+    fetch(`http://localhost:5000/importedProducts?email=${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
       });
-  }, [user.email]);
+  }, [user?.email]);
 
   const deleteProductHandle = (id) => {
     Swal.fire({
@@ -24,7 +25,7 @@ const MyImport = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/products/${id}`, {
+        fetch(`http://localhost:5000/importedProducts/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -106,7 +107,9 @@ const MyImport = () => {
                     </td>
                     <td>{user.displayName}</td>
                     <td>
-                      <button className="btn btn-success">See Details</button>
+                      <Link to={`/viewDetails/${product._id}`}>
+                        <button className="btn btn-success">View Deails</button>
+                      </Link>
                     </td>
                     <th>
                       <button

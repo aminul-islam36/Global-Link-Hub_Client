@@ -1,28 +1,56 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
+import AuthContext from "../Contexts/AuthContext";
 
 const Details = () => {
+  const { user } = useContext(AuthContext);
   const modalRef = useRef();
   const product = useLoaderData();
   const { name, price, origin_country, image, rating, available_quantity } =
     product;
 
-  const importNowThisProduct = () => {
+  const [quantity, setQuantity] = useState(available_quantity);
+
+  // ------------------------------------Open Modal Function --------------------------------------
+
+  const importModalHandle = () => {
     modalRef.current.showModal();
   };
 
+  // ------------------------------------Import Product Quantity Function --------------------------------------
+
   const importProductHandle = (e) => {
     e.preventDefault();
+
+    const importQuantity = parseInt(e.target.quantity.value);
+    console.log(importQuantity);
+
+    fetch(`http://localhost:5000/products/quantity/${product._id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        quantity: importQuantity,
+        user_email: user.email,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data has been updated", data);
+      });
+
     modalRef.current.close();
     Swal.fire({
       position: "center",
       icon: "success",
       title: "successfully Imported !",
       showConfirmButton: false,
-      timer: 1500,
+      timer: 3000,
     });
-    console.log("kk");
+    const reminingQuantity = (product.available_quantity -= importQuantity);
+    setQuantity(reminingQuantity);
   };
   return (
     <div>
@@ -45,7 +73,7 @@ const Details = () => {
             </p>
             <p className="text-gray-600 text-lg mt-1">
               Available Quantity:{" "}
-              <span className="font-medium">{available_quantity}</span>
+              <span className="font-medium">{quantity}</span>
             </p>
             <p className="text-gray-600 text-lg mt-1">
               Rating:{" "}
@@ -55,7 +83,7 @@ const Details = () => {
 
             <div className="card-actions mt-6">
               <button
-                onClick={importNowThisProduct}
+                onClick={importModalHandle}
                 className="btn btn-accent btn-lg text-white w-full"
               >
                 Import Now
@@ -93,6 +121,8 @@ const Details = () => {
                   <input
                     type="number"
                     required
+                    name="quantity"
+                    max={available_quantity}
                     className="input w-full no-spinner"
                     placeholder="type product quantity..."
                   />

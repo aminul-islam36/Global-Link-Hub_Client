@@ -23,7 +23,7 @@ const AddProduct = () => {
       rating,
       available_quantity: quantity,
       created_At: new Date(),
-      buyer_email: user.email,
+      seller_email: user.email,
     };
 
     fetch("http://localhost:5000/products", {
