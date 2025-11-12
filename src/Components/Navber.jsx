@@ -108,7 +108,7 @@ const Navber = () => {
                   tabIndex={0}
                   className="menu menu-sm dropdown-content mt-3 z-10 p-2 shadow bg-base-100 rounded-box w-52"
                 >
-                  <li className="text-center font-semibold text-gray-700">
+                  <li className="text-center font-semibold">
                     {user.displayName || "Anonymous"}
                   </li>
                 </ul>

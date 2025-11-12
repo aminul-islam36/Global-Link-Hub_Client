@@ -49,7 +49,7 @@ const ViewDetails = () => {
 
             <Link
               to="/myImport"
-              className="btn btn-accent btn-lg text-white max-w-1/2 w-[400px]"
+              className="btn btn-accent btn-lg text-white w-full md:max-w-1/2 md:w-[400px]"
             >
               Back to My Import Page
             </Link>
