@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../Contexts/AuthContext";
 import { LuCirclePlus } from "react-icons/lu";
+import Swal from "sweetalert2";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
@@ -38,7 +39,14 @@ const AddProduct = () => {
       .then((data) => {
         console.log("data after added", data);
         if (data.insertedId) {
-          toast("your Product Added successfull");
+          form.reset();
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your product has been added",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
       });
   };

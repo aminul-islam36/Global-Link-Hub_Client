@@ -26,8 +26,8 @@ const AllProducts = () => {
   return (
     <div className="mx-auto w-11/12">
       <div className="flex justify-between border-b border-b-accent/30 pb-2">
-        <h1 className=" font-bold text-2xl md:text-4xl lg:text-6xl text-accent ">
-          All Products
+        <h1 className=" font-bold text-2xl md:text-4xl lg:text-5xl text-accent ">
+          All Products : {filtaredProducts.length}
         </h1>
         <input
           className="focus:outline-0 input"

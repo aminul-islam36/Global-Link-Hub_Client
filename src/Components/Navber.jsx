@@ -20,14 +20,17 @@ const Navber = () => {
       <li>
         <NavLink to="/myexport">My Exports</NavLink>
       </li>
-      <li>
-        <NavLink to="/myImport"> My Import</NavLink>
-      </li>
-      <li>
-        <NavLink to="/addProduct">Add Product</NavLink>
-      </li>
+
       {user ? (
-        ""
+        <>
+          <li>
+            <NavLink to="/myImport"> My Import</NavLink>
+          </li>
+
+          <li>
+            <NavLink to="/addProduct">Add Product</NavLink>
+          </li>
+        </>
       ) : (
         <li>
           <NavLink to="/register">Register</NavLink>

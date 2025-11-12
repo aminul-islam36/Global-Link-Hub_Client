@@ -12,7 +12,9 @@ const Details = () => {
   const { name, price, origin_country, image, rating, available_quantity } =
     product;
 
-  const [quantity, setQuantity] = useState(available_quantity);
+  const [availableQuantity, setAvailableQuantity] =
+    useState(available_quantity);
+  const [importedQuantity, setImportedQuantity] = useState("");
 
   // ------------------------------------Open Modal Function --------------------------------------
 
@@ -27,6 +29,7 @@ const Details = () => {
 
     const importQuantity = parseInt(e.target.quantity.value);
     console.log(importQuantity);
+    setImportedQuantity(importQuantity);
 
     fetch(`http://localhost:5000/products/quantity/${product._id}`, {
       method: "PUT",
@@ -44,6 +47,7 @@ const Details = () => {
       });
 
     modalRef.current.close();
+    e.target.reset();
     Swal.fire({
       position: "center",
       icon: "success",
@@ -52,7 +56,7 @@ const Details = () => {
       timer: 3000,
     });
     const reminingQuantity = (product.available_quantity -= importQuantity);
-    setQuantity(reminingQuantity);
+    setAvailableQuantity(reminingQuantity);
   };
   return (
     <div>
@@ -78,7 +82,7 @@ const Details = () => {
             </p>
             <p className="text-gray-600 text-lg mt-1">
               Available Quantity:{" "}
-              <span className="font-medium">{quantity}</span>
+              <span className="font-medium">{availableQuantity}</span>
             </p>
             <p className="text-gray-600 text-lg mt-1">
               Rating:{" "}
@@ -119,7 +123,7 @@ const Details = () => {
           <h3 className="text-2xl font-semibold mb-3 text-accent">
             Product Description
           </h3>
-          <p className="text-gray-700">
+          <p>
             At Global Link Hub, we provide fast, reliable, and secure
             transportation services designed to meet the needs of modern
             businesses and individuals. Our priority is ensuring that every
@@ -135,11 +139,7 @@ const Details = () => {
 
         {/* ---------------------------------------Modal ------------------------------- */}
 
-        <dialog
-          ref={modalRef}
-          id="my_modal_5"
-          className="modal modal-bottom sm:modal-middle"
-        >
+        <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
           <div className="modal-box">
             <div className="card-body p-0">
               <h2 className="card-title text-2xl font-bold"> {name}</h2>
@@ -153,11 +153,23 @@ const Details = () => {
                     required
                     name="quantity"
                     max={available_quantity}
-                    className="input w-full no-spinner"
+                    onChange={(e) =>
+                      setImportedQuantity(Number(e.target.value))
+                    }
+                    className="input w-full no-spinner focus:outline-0"
                     placeholder="type product quantity..."
                   />
 
-                  <button className="btn btn-neutral mt-4">Import</button>
+                  <button
+                    className="btn btn-accent text-white mt-4"
+                    disabled={
+                      importedQuantity !== "" &&
+                      (importedQuantity < 0 ||
+                        importedQuantity > availableQuantity)
+                    }
+                  >
+                    Import your Product
+                  </button>
                 </fieldset>
               </form>
             </div>
