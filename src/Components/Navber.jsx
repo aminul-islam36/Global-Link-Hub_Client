@@ -98,9 +98,9 @@ const Navber = () => {
                     <img
                       src={
                         user.photoURL ||
-                        "https://img.freepik.com/premium-vector/user-icon-icon_1076610-59410.jpg"
+                        "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
                       }
-                      alt="User"
+                      alt={user.name}
                     />
                   </div>
                 </div>
