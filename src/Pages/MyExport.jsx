@@ -106,6 +106,43 @@ const MyExport = () => {
         modalRef.current.close();
       });
   };
+
+  const csvDownloadHandle = () => {
+    // --------------CSV header----------------
+    const headers = ["Name", "Price", "Quantity", "Origin Country", "Rating"];
+
+    // --------------------------------CSV rows----------------
+
+    const rows = products.map((product) => [
+      `"${product.name}"`,
+      product.price,
+      product.available_quantity,
+      `"${product.origin_country}"`,
+      product.rating,
+    ]);
+
+    //  ---------------------------------- CSV Content -------------------------
+
+    const csvContent = [headers, ...rows]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    // ----------------------------------------Blobl Create --------------------------------
+
+    const blob = new Blob([csvContent], { type: "text/csv" });
+
+    // ---------------------------Link Create ------------------------------
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `products-${new Date().toISOString()}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="w-11/12 mx-auto pt-5">
       <Helmet>
@@ -117,7 +154,7 @@ const MyExport = () => {
         <div className="overflow-x-auto">
           {products.length === 0 ? (
             <div className="text-center py-10">
-              <h2 className="text-2xl font-semibold text-gray-600">
+              <h2 className="text-2xl lg:text-4xl font-semibold text-accent mb-2 border-b border-b-accent pb-5">
                 No Products Available
               </h2>
               <p className="text-gray-500 mt-2">
@@ -127,12 +164,19 @@ const MyExport = () => {
             </div>
           ) : (
             <div className="overflow-x-auto">
+              <div className="flex justify-between py-5  border-b border-b-accent mb-5 ">
+                <h2 className="text-2xl text-accent">
+                  My All Exports - {products.length}
+                </h2>
+                <button
+                  className="btn btn-accent text-white"
+                  onClick={csvDownloadHandle}
+                >
+                  {" "}
+                  Download All
+                </button>
+              </div>
               <table className="table">
-                <thead className="text-center">
-                  <tr className="text-2xl text-accent">
-                    My All Exports - {products.length}
-                  </tr>
-                </thead>
                 <tbody>
                   {/* row 1 */}
 

@@ -60,45 +60,59 @@ const AddProduct = () => {
           </h2>
           <form onSubmit={addNewProductHandle}>
             <fieldset className="fieldset  *:w-full">
-              {/* Email  */}
+              {/* Product Name  */}
               <label className="label">Product Name</label>
               <input
                 type="text"
+                required
                 name="productName"
                 className="input"
                 placeholder="Product Name..."
               />
-              {/* Password  */}
+              {/* Product Image  */}
               <label className="label">Product Image</label>
               <input
                 type="text"
+                required
                 name="productRUL"
                 className="input"
                 placeholder="Product Image..."
               />
+
+              {/* Product Price  */}
+
               <label className="label">Product Price</label>
               <input
                 type="number"
+                required
                 name="productPrice"
                 className="input no-spinner"
                 placeholder="Product Price..."
               />
+
+              {/* Product Origin Country  */}
               <label className="label">Origin Country</label>
               <input
                 type="text"
+                required
                 name="originCountry"
                 className="input"
                 placeholder="Origin Country"
               />
+
+              {/* Product Rating  */}
               <label className="label">Product Rating</label>
               <input
                 type="number"
+                required
                 name="rating"
                 min="0"
                 step="0.01"
                 className="input no-spinner"
                 placeholder="product quality"
               />
+              {/* Product Available quantity  */}
+
               <label className="label">Available quantity</label>
               <input
                 type="number"

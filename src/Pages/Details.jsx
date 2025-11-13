@@ -168,7 +168,7 @@ const Details = () => {
                     className="btn btn-accent text-white mt-4"
                     disabled={
                       importedQuantity !== "" &&
-                      (importedQuantity < 0 ||
+                      (importedQuantity < 1 ||
                         importedQuantity > availableQuantity)
                     }
                   >
