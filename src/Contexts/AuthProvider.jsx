@@ -16,31 +16,27 @@ import { auth } from "../Firebase/Firebase.config";
 
 const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   // Google SingIn func
   const userWithGoogle = () => {
-    setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
-  // Create  User FUnction
+  // Create  User Function
 
   const registerWithEmailPass = (email, password) => {
-    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   // login user Func
 
   const loginWithEmailPass = (email, password) => {
-    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   const logOutFunc = () => {
-    setLoading(true);
     return signOut(auth);
   };
 
@@ -63,6 +59,7 @@ const AuthProvider = ({ children }) => {
     user,
     loading,
   };
+
   return (
     <AuthContext.Provider value={authInf}>{children}</AuthContext.Provider>
   );

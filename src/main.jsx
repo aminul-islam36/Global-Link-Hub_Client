@@ -8,6 +8,8 @@ import router from "./Routers/Routers.jsx";
 import AuthProvider from "./Contexts/AuthProvider.jsx";
 import { ToastContainer } from "react-toastify";
 import { HelmetProvider } from "react-helmet-async";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+const queryClient = new QueryClient();
 
 // Initialize AOS
 Aos.init({
@@ -20,11 +22,13 @@ Aos.init({
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <HelmetProvider>
-        <RouterProvider router={router}></RouterProvider>
-        <ToastContainer />
-      </HelmetProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <HelmetProvider>
+          <RouterProvider router={router}></RouterProvider>
+          <ToastContainer />
+        </HelmetProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>
 );

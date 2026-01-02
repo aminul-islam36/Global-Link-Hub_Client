@@ -1,14 +1,12 @@
-import React from "react";
-import { IoMdStar } from "react-icons/io";
 import { Link } from "react-router-dom";
-import Loading from "./Loading";
+import Loader from "./Loader";
 
-const SingleProduct = ({ singleProduct }) => {
-  const { name, image, price, available_quantity } = singleProduct;
+const PCard = ({ product }) => {
+  const { name, image, price, available_quantity } = product;
 
   return (
-    <div data-aos="fade-up" data-aos-offset="200" data-aos-duration="500">
-      {singleProduct ? (
+    <div>
+      {product ? (
         <div className="card bg-base-100 w-full border border-gray-200 rounded-2xl hover:shadow-lg transition-shadow duration-300">
           <figure className="px-10 pt-10">
             <img
@@ -26,7 +24,7 @@ const SingleProduct = ({ singleProduct }) => {
               <h2 className="">{available_quantity} Products Available</h2>
             </div>
             <div className="card-actions">
-              <Link to={`/details/${singleProduct._id}`}>
+              <Link to={`/details/${product._id}`}>
                 <button className="btn btn-accent text-white">
                   View Deails
                 </button>
@@ -35,10 +33,10 @@ const SingleProduct = ({ singleProduct }) => {
           </div>
         </div>
       ) : (
-        <Loading />
+        <Loader />
       )}
     </div>
   );
 };
 
-export default SingleProduct;
+export default PCard;

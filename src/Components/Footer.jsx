@@ -1,7 +1,6 @@
-import React from "react";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import Logo from "./Logo";
 
 const Footer = () => {
   return (
@@ -9,12 +8,7 @@ const Footer = () => {
       <div className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
         {/* Company Info */}
         <div>
-          <Link
-            to="/"
-            className="text-2xl font-bold border-b-2 border-b-accent"
-          >
-            Global <span className="text-accent">Hub</span>
-          </Link>
+          <Logo />
           <p className="text-gray-400 mt-5">
             We provide quality export and import solutions worldwide. <br />{" "}
             Connecting businesses globally with trust and efficiency.

@@ -5,13 +5,10 @@ import BgImage from "../assets/Hero.jpg";
 const Hero = () => {
   return (
     <div
-      data-aos="fade-down"
-      data-aos-duration="500"
-      data-aos-offset="100"
       style={{ backgroundImage: `url(${BgImage})` }}
       className="hero min-h-[600px] bg-no-repeat bg-cover bg-top relative"
     >
-      <div className="absolute inset-0 bg-black/60"></div>
+      <div className="absolute inset-0 bg-black/80"></div>
       <div className="hero-content w-full text-center text-neutral-content relative z-10 lg:w-[700px]">
         <div>
           <h2 className="text-lg text-accent mb-2">Trusted By People</h2>

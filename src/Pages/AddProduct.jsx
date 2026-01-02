@@ -3,34 +3,29 @@ import Swal from "sweetalert2";
 import useAxios from "../hooks/useAxios";
 import useAuth from "../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
 
 const AddProduct = () => {
   const { user } = useAuth();
+  const { register, handleSubmit, reset } = useForm();
   const axiosURL = useAxios();
 
-  const addNewProductHandle = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const productName = form.productName.value;
-    const productRUL = form.productRUL.value;
-    const productPrice = form.productPrice.value;
-    const originCountry = form.originCountry.value;
-    const rating = form.rating.value;
-    const quantity = form.quantity.value;
+  const handleProduct = async (data) => {
     const newProduct = {
-      name: productName,
-      image: productRUL,
-      price: productPrice,
-      origin_country: originCountry,
-      rating,
-      available_quantity: quantity,
+      name: data.productName,
+      image: data.productRUL,
+      price: Number(data.productPrice),
+      origin_country: data.originCountry,
+      rating: Number(data.rating),
+      available_quantity: Number(data.quantity),
       created_At: new Date(),
       seller_email: user.email,
+      description: data.textarea,
     };
 
     const res = await axiosURL.post("/products", newProduct);
     if (res.data.insertedId) {
-      form.reset();
+      reset();
       Swal.fire({
         position: "center",
         icon: "success",
@@ -50,14 +45,15 @@ const AddProduct = () => {
           <h2 className="text-center font-semibold text-xl">
             Add New Product For Selling{" "}
           </h2>
-          <form onSubmit={addNewProductHandle}>
+          <form onSubmit={handleSubmit(handleProduct)}>
             <fieldset className="fieldset  *:w-full">
               {/* Product Name  */}
               <label className="label">Product Name</label>
               <input
                 type="text"
-                required
-                name="productName"
+                {...register("productName", {
+                  required: "Please enter Product name.",
+                })}
                 className="input"
                 placeholder="Product Name..."
               />
@@ -66,7 +62,7 @@ const AddProduct = () => {
               <input
                 type="text"
                 required
-                name="productRUL"
+                {...register("productRUL")}
                 className="input"
                 placeholder="Product Image..."
               />
@@ -77,7 +73,7 @@ const AddProduct = () => {
               <input
                 type="number"
                 required
-                name="productPrice"
+                {...register("productPrice")}
                 className="input no-spinner"
                 placeholder="Product Price..."
               />
@@ -87,7 +83,7 @@ const AddProduct = () => {
               <input
                 type="text"
                 required
-                name="originCountry"
+                {...register("originCountry")}
                 className="input"
                 placeholder="Origin Country"
               />
@@ -97,7 +93,7 @@ const AddProduct = () => {
               <input
                 type="number"
                 required
-                name="rating"
+                {...register("rating")}
                 min="0"
                 step="0.01"
                 className="input no-spinner"
@@ -108,11 +104,17 @@ const AddProduct = () => {
               <label className="label">Available quantity</label>
               <input
                 type="number"
-                name="quantity"
+                {...register("quantity")}
                 className="input no-spinner"
                 placeholder="Available quantity"
               />
 
+              <label className="label">Product Details</label>
+              <textarea
+                placeholder="Product Details"
+                {...register("textarea")}
+                className="textarea"
+              ></textarea>
               <button className="btn btn-accent text-white mt-4">
                 Add New Product <LuCirclePlus />
               </button>

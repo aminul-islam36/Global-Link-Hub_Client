@@ -4,29 +4,46 @@ import { toast } from "react-toastify";
 import { MdLogin } from "react-icons/md";
 import useAuth from "../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm();
   const [show, setShow] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-
   const { loginWithEmailPass, userWithGoogle } = useAuth();
-  const loginHandle = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
+  const [btnLoading, setBtnLoading] = useState(false);
 
-    loginWithEmailPass(email, password)
-      .then(() => {
-        navigate(location.state || "/");
-        toast.success("Login successfull !");
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
+  const loginHandle = async (data) => {
+    setBtnLoading(true);
+    try {
+      await loginWithEmailPass(data.email, data.password);
+      toast.success("login succes");
+      navigate(location.state || "/");
+    } catch (err) {
+      console.log(err.code);
+
+      if (
+        err.code === "auth/invalid-credential" ||
+        err.code === "auth/user-not-found" ||
+        err.code === "auth/wrong-password"
+      ) {
+        setError("password", {
+          type: "manual",
+          message: "Invalid email or password",
+        });
+
+        toast.error("Invalid email or password");
+      } else {
+        toast.error("Something went wrong. Try again.");
+      }
+    }
   };
-
   const handleGoogleUser = () => {
     userWithGoogle().then(() => {
       navigate(location.state || "/");
@@ -46,14 +63,13 @@ const Login = () => {
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
               <h2 className="text-center font-semibold text-xl">Login Now</h2>
-              <form onSubmit={loginHandle}>
+              <form onSubmit={handleSubmit(loginHandle)}>
                 <fieldset className="fieldset">
                   {/* Email  */}
                   <label className="label">Your Email</label>
                   <input
                     type="email"
-                    name="email"
-                    required
+                    {...register("email", { required: "enter email" })}
                     className="input"
                     placeholder="Your Email..."
                   />
@@ -62,11 +78,15 @@ const Login = () => {
                   <div className="relative">
                     <input
                       type={show ? "text" : "password"}
-                      name="password"
-                      required
+                      {...register("password", { required: "enter password" })}
                       className="input"
                       placeholder="******"
                     />
+                    {errors.password && (
+                      <p className="text-red-500 text-sm">
+                        {errors.password.message}
+                      </p>
+                    )}
                     <span
                       onClick={() => setShow(!show)}
                       className="absolute top-1/2 -translate-y-1/2 right-6 cursor-pointer z-20"

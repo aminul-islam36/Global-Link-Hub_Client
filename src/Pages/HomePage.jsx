@@ -1,20 +1,16 @@
-import React from "react";
 import Hero from "../Components/Hero";
-import Products from "../Components/Products";
 import TransportationModes from "../Components/TransportationModes ";
 import ContactUS from "../Components/ContactUS";
-import Loader from "../Components/Loader";
-
-const productsPromise = fetch(
-  "https://global-link-hub.vercel.app/products"
-).then((res) => res.json());
+import Testimonials from "../Components/Testimonials";
+import LatestProducts from "../Components/LatestProducts";
 
 const HomePage = () => {
   return (
     <div>
       <Hero />
-      <Products productsPromise={productsPromise} />
+      <LatestProducts />
       <TransportationModes />
+      <Testimonials />
       <ContactUS />
     </div>
   );

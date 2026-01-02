@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import AuthContext from "../Contexts/AuthContext";
 import { toast } from "react-toastify";
-import Loading from "./Loading";
 import { MdLogin } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
+import useAuth from "../hooks/useAuth";
+import GlobalLoader from "./GlobalLoader ";
+import { Menu } from "lucide-react";
+import Logo from "./Logo";
 
 const Navber = () => {
-  const { user, logOutFunc, loading } = useContext(AuthContext);
+  const { user, logOutFunc, loading } = useAuth();
 
   const links = (
     <>
@@ -15,14 +16,17 @@ const Navber = () => {
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to="/products">Products</NavLink>
+        <NavLink to="/all-products">All Products</NavLink>
       </li>
       <li>
-        <NavLink to="/myexport">My Exports</NavLink>
+        <NavLink to="/blogs">Blogs</NavLink>
       </li>
 
       {user ? (
         <>
+          <li>
+            <NavLink to="/myexport">My Exports</NavLink>
+          </li>
           <li>
             <NavLink to="/myImport"> My Import</NavLink>
           </li>
@@ -39,35 +43,29 @@ const Navber = () => {
     </>
   );
 
-  const logOutUserHandle = () => {
-    logOutFunc()
-      .then(() => {
-        toast.success("logOut successfull");
-      })
-      .catch((err) => toast(err.message));
+  const logOutUserHandle = async () => {
+    try {
+      await logOutFunc();
+      toast.success("logOut successfull");
+    } catch (err) {
+      toast.error(err.message);
+      console.log(err.message);
+    }
   };
-
+  if (loading) {
+    return <GlobalLoader />;
+  }
   return (
     <div className=" bg-base-100">
       <div className=" w-11/12 mx-auto navbar ">
         <div className="navbar-start">
           <div className="dropdown z-999">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {" "}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
-              </svg>
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-outline lg:hidden mr-2"
+            >
+              <Menu />
             </div>
             <ul
               tabIndex="-1"
@@ -76,48 +74,47 @@ const Navber = () => {
               {links}
             </ul>
           </div>
-          <Link
-            to="/"
-            className="text-2xl font-bold border-b-2 border-b-accent"
-          >
-            Global <span className="text-accent">Hub</span>
-          </Link>
+          <Logo />
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-          {loading ? (
-            <Loading />
-          ) : user ? (
+          {user ? (
             <div className="flex items-center gap-3">
-              <div className="dropdown dropdown-center">
-                <div tabIndex={0} role="button" className="avatar">
-                  <div className="w-12 rounded-full border border-gray-300 cursor-pointer">
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
                     <img
-                      src={
-                        user.photoURL ||
-                        "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
-                      }
-                      alt={user.name}
+                      alt="Tailwind CSS Navbar component"
+                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
                     />
                   </div>
                 </div>
                 <ul
-                  tabIndex={0}
-                  className="menu menu-sm dropdown-content mt-3 z-10 p-2 shadow bg-base-100 rounded-box w-52"
+                  tabIndex="-1"
+                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-45 p-2 shadow"
                 >
-                  <li className="text-center font-semibold">
-                    {user.displayName || "Anonymous"}
+                  <li>
+                    <a className="justify-between">Profile</a>
+                  </li>
+                  <li>
+                    <a>Settings</a>
+                  </li>
+                  <li>
+                    <button
+                      onClick={logOutUserHandle}
+                      className="btn btn-accent text-white"
+                    >
+                      Logout <FiLogOut className="font-bold" />
+                    </button>
                   </li>
                 </ul>
               </div>
-              <button
-                onClick={logOutUserHandle}
-                className="btn btn-accent text-white"
-              >
-                Log Out <FiLogOut className="font-bold" />
-              </button>
             </div>
           ) : (
             <Link to="login" className="btn btn-accent text-white">

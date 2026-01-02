@@ -49,7 +49,7 @@ const TransportationModes = () => {
               <h3 className="mt-4 text-xl font-semibold text-accent">
                 {mode.title}
               </h3>
-              <p className="mt-2 text-gray-500 text-sm leading-relaxed">
+              <p className="mt-2 text-base-content text-sm leading-relaxed">
                 {mode.description}
               </p>
             </div>

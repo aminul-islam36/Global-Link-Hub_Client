@@ -1,16 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import Loading from "../Components/Loading";
 import Swal from "sweetalert2";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import useAuth from "../hooks/useAuth";
 import useAxios from "../hooks/useAxios";
 import { Helmet } from "react-helmet-async";
+import Loader from "../Components/Loader";
+import { useForm } from "react-hook-form";
 
 const MyExport = () => {
   const [isLoading, setIsLoading] = useState(true);
   const modalRef = useRef();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const axiosURL = useAxios();
+  const { register, handleSubmit } = useForm();
   const [products, setProducts] = useState([]);
   const [editOldProduct, setEditOldProduct] = useState();
   useEffect(() => {
@@ -50,22 +52,14 @@ const MyExport = () => {
     setEditOldProduct(product);
   };
 
-  const updateProductHandle = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const productName = form.productName.value;
-    const productRUL = form.productRUL.value;
-    const productPrice = form.productPrice.value;
-    const originCountry = form.originCountry.value;
-    const rating = form.rating.value;
-    const quantity = form.quantity.value;
+  const updateProductHandle = async (data) => {
     const updateProduct = {
-      name: productName,
-      image: productRUL,
-      price: productPrice,
-      origin_country: originCountry,
-      rating,
-      available_quantity: quantity,
+      name: data.productName,
+      image: data.productRUL,
+      price: data.productPrice,
+      origin_country: data.originCountry,
+      rating: data.rating,
+      available_quantity: data.quantity,
       created_At: new Date(),
       buyer_email: user.email,
     };
@@ -91,7 +85,9 @@ const MyExport = () => {
     });
     modalRef.current.close();
   };
-  // DownLoad CSV
+
+  //----------- DownLoad CSV------------
+
   const csvDownloadHandle = () => {
     // --------------CSV header----------------
     const headers = ["Name", "Price", "Quantity", "Origin Country", "Rating"];
@@ -134,7 +130,7 @@ const MyExport = () => {
         <title>My Export</title>
       </Helmet>
       {isLoading ? (
-        <Loading />
+        <Loader />
       ) : (
         <div className="overflow-x-auto">
           {products.length === 0 ? (
@@ -157,7 +153,6 @@ const MyExport = () => {
                   className="btn btn-accent text-white"
                   onClick={csvDownloadHandle}
                 >
-                  {" "}
                   Download All
                 </button>
               </div>
@@ -240,13 +235,13 @@ const MyExport = () => {
                 <h2 className="text-center font-semibold text-xl">
                   Update YourProduct
                 </h2>
-                <form onSubmit={updateProductHandle}>
+                <form onSubmit={handleSubmit(updateProductHandle)}>
                   <fieldset className="fieldset  *:w-full">
                     {/* Product Name  */}
                     <label className="label">Product Name</label>
                     <input
                       type="text"
-                      name="productName"
+                      {...register("productName")}
                       className="input"
                       defaultValue={editOldProduct?.name}
                       placeholder="Product Name..."
@@ -255,7 +250,7 @@ const MyExport = () => {
                     <label className="label">Product Image</label>
                     <input
                       type="text"
-                      name="productRUL"
+                      {...register("productRUL")}
                       defaultValue={editOldProduct?.image}
                       className="input"
                       placeholder="Product Image..."
@@ -266,7 +261,7 @@ const MyExport = () => {
                     <label className="label">Product Price</label>
                     <input
                       type="number"
-                      name="productPrice"
+                      {...register("productPrice")}
                       defaultValue={editOldProduct?.price}
                       className="input no-spinner"
                       placeholder="Product Price..."
@@ -276,7 +271,7 @@ const MyExport = () => {
                     <label className="label">Origin Country</label>
                     <input
                       type="text"
-                      name="originCountry"
+                      {...register("originCountry")}
                       className="input"
                       defaultValue={editOldProduct?.origin_country}
                       placeholder="Origin Country"
@@ -286,7 +281,7 @@ const MyExport = () => {
                     <label className="label">Product Rating</label>
                     <input
                       type="number"
-                      name="rating"
+                      {...register("rating")}
                       min="0"
                       step="0.01"
                       defaultValue={editOldProduct?.rating}
@@ -298,8 +293,8 @@ const MyExport = () => {
                     <label className="label">Available quantity</label>
                     <input
                       type="number"
+                      {...register("quantity")}
                       defaultValue={editOldProduct?.available_quantity}
-                      name="quantity"
                       className="input no-spinner"
                       placeholder="Available quantity"
                     />

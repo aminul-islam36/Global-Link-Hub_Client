@@ -5,20 +5,19 @@ import { FaUserPlus } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
   const [show, setShow] = useState(false);
+  const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
-
   const { registerWithEmailPass, userWithGoogle } = useAuth();
 
-  const handleNewUser = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const photoURL = form.photoURL.value;
-    const email = form.email.value;
-    const password = form.password.value;
+  const handleRegister = (data) => {
+    const name = data.name;
+    const photoURL = data.photoURL;
+    const email = data.email;
+    const password = data.password;
     const passwordVelidation = /^(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d@#$%^&*!]{6,}$/;
     if (!passwordVelidation.test(password)) {
       toast(
@@ -27,9 +26,8 @@ const Register = () => {
       return;
     }
     registerWithEmailPass(email, password)
-      .then((data) => {
-        // console.log(data);
-        const user = data.user;
+      .then((res) => {
+        const user = res.user;
         updateProfile(user, {
           displayName: name,
           photoURL: photoURL,
@@ -51,9 +49,9 @@ const Register = () => {
 
   const handleGoogleUser = () => {
     userWithGoogle()
-      .then((data) => {
+      .then((res) => {
         // console.log(data);
-        const user = data.user;
+        const user = res.user;
         updateProfile(user, {
           displayName: user.displayName,
           photoURL: user.photoURL,
@@ -82,14 +80,15 @@ const Register = () => {
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <div className="card-body py-12">
             <h2 className="text-center font-semibold text-xl">Register Now</h2>
-            <form onSubmit={handleNewUser}>
+            <form onSubmit={handleSubmit(handleRegister)}>
               <fieldset className="fieldset">
                 {/* Name Fild  */}
                 <label className="label">Your Name</label>
                 <input
                   type="text"
-                  name="name"
-                  required
+                  {...register("name", {
+                    required: "Please enter your name",
+                  })}
                   className="input"
                   placeholder="Your Name..."
                 />
@@ -97,7 +96,7 @@ const Register = () => {
                 <label className="label">Photo URL</label>
                 <input
                   type="text"
-                  name="photoURL"
+                  {...register("photoURL")}
                   className="input"
                   placeholder="Photo URL..."
                 />
@@ -105,8 +104,7 @@ const Register = () => {
                 <label className="label">Your Email</label>
                 <input
                   type="email"
-                  name="email"
-                  required
+                  {...register("email", { required: "please enter email" })}
                   className="input"
                   placeholder="Your Email..."
                 />
@@ -114,8 +112,9 @@ const Register = () => {
                 <div className="relative">
                   <input
                     type={show ? "text" : "password"}
-                    name="password"
-                    required
+                    {...register("password", {
+                      required: "please enter password",
+                    })}
                     className="input"
                     placeholder="******"
                   />

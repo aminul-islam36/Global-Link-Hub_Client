@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from "react";
-import SingleProduct from "../Components/SingleProduct";
+import React, { useState } from "react";
 import useAxios from "../hooks/useAxios";
-import Loader from "../Components/Loader";
 import { Helmet } from "react-helmet-async";
+import PCard from "../Components/PCard";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../Components/Loader";
 
 const AllProducts = () => {
   const axiosURL = useAxios();
-  const [isLoading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState([]);
   const [searchProduct, setSearchProduct] = useState("");
-  useEffect(() => {
-    axiosURL.get("products").then((res) => {
-      setProducts(res.data);
-      setIsLoading(false);
-    });
-  }, [axiosURL]);
+
+  const { data: products = [], isLoading } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      const res = await axiosURL.get("/products");
+      return res.data;
+    },
+  });
 
   const searchValue = (e) => {
-    const searchValue = e.target.value;
-    setSearchProduct(searchValue);
+    const search = e.target.value;
+    setSearchProduct(search);
   };
 
   const filtaredProducts = products.filter((product) => {
@@ -37,28 +38,26 @@ const AllProducts = () => {
         <input
           className="focus:outline-0 input"
           type="search"
-          required
           value={searchProduct}
           onChange={searchValue}
           placeholder="Search"
         />
       </div>
-      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 py-5 ">
-        {isLoading ? (
-          <Loader />
-        ) : filtaredProducts.length > 0 ? (
-          filtaredProducts.map((singleProduct) => (
-            <SingleProduct
-              key={singleProduct._id}
-              singleProduct={singleProduct}
-            />
-          ))
-        ) : (
-          <p className="text-center text-gray-500 col-span-3 text-xl">
-            No products found 😢
-          </p>
-        )}
-      </div>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 py-5 ">
+          {filtaredProducts.length > 0 ? (
+            filtaredProducts.map((product) => (
+              <PCard key={product._id} product={product} />
+            ))
+          ) : (
+            <p className="text-center text-gray-500 col-span-3 text-xl">
+              No products found 😢
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 };
