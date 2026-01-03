@@ -1,5 +1,6 @@
 import React from "react";
 import BlogCard from "../Components/BlogCard";
+import Title from "../utilities/Title";
 
 const Blogs = () => {
   const blogs = [
@@ -187,7 +188,8 @@ const Blogs = () => {
     <div className="max-w-7xl mx-auto px-4 py-10">
       {/* Page Header */}
       <div className="text-center mb-10">
-        <h1 className="text-4xl font-bold mb-3">📚 Our Blogs</h1>
+        <h1 className="text-4xl font-bold mb-3"> </h1>
+        <Title>📚Our Blogs</Title>
         <p className="text-gray-600">
           Read articles about React, MERN Stack, and Web Development
         </p>

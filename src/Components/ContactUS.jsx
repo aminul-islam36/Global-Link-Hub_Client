@@ -13,10 +13,13 @@ const handleForm = (e) => {
 };
 const ContactUS = () => {
   return (
-    <div className="flex justify-center items-center py-10 bg-base-200 m-5">
+    <div
+      id="contact"
+      className=" flex justify-center items-center bg-base-200 mb-8 mt-4 max-w-7xl mx-auto"
+    >
       <form
         onSubmit={handleForm}
-        className="bg-base-100 shadow-lg rounded-2xl p-8 w-full max-w-[700px] space-y-5"
+        className="bg-base-100 border border-gray-200/30 rounded-2xl p-4 lg:p-8 w-full max-w-[700px] space-y-5"
       >
         <h2 className="text-2xl text-accent font-bold text-center">
           REQUEST A QUICK QUOTE
@@ -52,7 +55,7 @@ const ContactUS = () => {
           <input
             type="number"
             placeholder="+123456789"
-            className=" no-spinner w-full border rounded-lg p-3 outline-none input"
+            className=" no-spinner w-full rounded-lg p-3 outline-none input"
             required
           />
         </div>
@@ -62,7 +65,7 @@ const ContactUS = () => {
           <textarea
             rows="4"
             placeholder="Write your message..."
-            className="w-full border rounded-lg p-3 outline-none resize-none"
+            className="w-full textarea rounded-lg p-3 outline-none resize-none"
           ></textarea>
         </div>
 

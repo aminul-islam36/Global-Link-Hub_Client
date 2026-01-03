@@ -1,19 +1,20 @@
 import React from "react";
 
 import BgImage from "../assets/Hero.jpg";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
     <div
+      className="hero min-h-[600px] bg-no-repeat bg-top relative"
       style={{ backgroundImage: `url(${BgImage})` }}
-      className="hero min-h-[600px] bg-no-repeat bg-cover bg-top relative"
     >
       <div className="absolute inset-0 bg-black/80"></div>
       <div className="hero-content w-full text-center text-neutral-content relative z-10 lg:w-[700px]">
         <div>
-          <h2 className="text-lg text-accent mb-2">Trusted By People</h2>
-          <h1 className="mb-5 text-4xl md:text-6xl font-bold leading-tight">
-            We Offer Fast & Secure{" "}
+          <h3 className="text-lg text-accent mb-2">Trusted By People</h3>
+          <h1 className="mb-5 text-3xl md:text-5xl font-bold leading-tight">
+            We Offer Fast & Secure
             <span className="text-accent">Transportation</span>
           </h1>
           <p className="mb-6 text-gray-200">
@@ -27,9 +28,9 @@ const Hero = () => {
             efficient delivery. From local distribution to international
             freight, we handle each shipment with care and precision.
           </p>
-          <button className="btn btn-accent text-white px-8">
+          <a href="#contact" className="btn btn-accent text-white px-8">
             Get A Free Quote
-          </button>
+          </a>
         </div>
       </div>
     </div>

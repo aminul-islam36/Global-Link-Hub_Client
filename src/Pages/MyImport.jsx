@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet-async";
 import ProductQuickViewModal from "../Components/ProductQuickViewModal";
 import Loader from "../Components/Loader";
 import { useQuery } from "@tanstack/react-query";
+import Title from "../utilities/Title";
 
 const MyImport = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -26,14 +27,14 @@ const MyImport = () => {
     },
   });
 
-  // 🔥 Quick View Handler
+  //  Quick View Handler
   const handleQuickView = (product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
   };
 
   //  Delete Handler
-  const deleteProductHandle = async (id) => {
+  const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -72,30 +73,22 @@ const MyImport = () => {
         </div>
       ) : (
         <div className="overflow-x-auto">
+          <Title>My All Imports - {products.length} </Title>
           <table className="table">
-            <thead className="text-center">
-              <tr className="text-2xl text-accent">
-                <th colSpan="4">My All Imports - {products.length}</th>
-              </tr>
-            </thead>
-
             <tbody>
               {products.map((product) => (
-                <tr
-                  key={product._id}
-                  className="grid grid-cols-2 md:table justify-center items-center"
-                >
-                  <td>
+                <tr key={product._id} className="grid grid-cols-2 md:table">
+                  <td className="lg:max-w-2/12 lg:w-full">
                     <img
+                      className="w-full max-w-[250px] h-auto aspect-2/1 rounded-2xl shadow-sm object-cover"
                       src={product.image}
                       alt={product.name}
-                      className="w-[220px] aspect-2/1 rounded-xl object-cover"
                     />
                   </td>
 
-                  <td>
+                  <td className="lg:max-w-6/12 lg:w-full">
                     <h2 className="font-bold md:text-lg">
-                      {product.name.slice(0, 22) + "..."}
+                      {product.name.slice(0, 35) + "..."}
                     </h2>
                   </td>
 
@@ -110,7 +103,7 @@ const MyImport = () => {
 
                   <td>
                     <button
-                      onClick={() => deleteProductHandle(product._id)}
+                      onClick={() => handleDelete(product._id)}
                       className="btn btn-accent text-white"
                     >
                       Remove <IoIosRemoveCircle />

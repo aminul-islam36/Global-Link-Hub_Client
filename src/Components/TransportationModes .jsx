@@ -1,5 +1,6 @@
 import { Plane, Ship, Train, Truck } from "lucide-react";
 import React from "react";
+import Title from "../utilities/Title";
 
 const TransportationModes = () => {
   const modes = [
@@ -34,27 +35,23 @@ const TransportationModes = () => {
   ];
 
   return (
-    <div className="py-8 bg-base-200">
-      <div className="w-11/12 md:w-10/12 mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-accent mb-12">
-          Our Modes Of Transportation
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {modes.map((mode) => (
-            <div
-              key={mode.id}
-              className="flex flex-col items-center text-center p-6 border border-gray-200 rounded-2xl hover:shadow-lg transition-shadow duration-300"
-            >
-              <span className="text-accent">{mode.icon}</span>
-              <h3 className="mt-4 text-xl font-semibold text-accent">
-                {mode.title}
-              </h3>
-              <p className="mt-2 text-base-content text-sm leading-relaxed">
-                {mode.description}
-              </p>
-            </div>
-          ))}
-        </div>
+    <div className="py-4 lg:py-8 max-w-7xl mx-auto flex justify-center items-center flex-col space-y-5">
+      <Title>Our Modes Of Transportation</Title>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center items-center gap-2 lg:gap-4">
+        {modes.map((mode) => (
+          <div
+            key={mode.id}
+            className="flex flex-col items-center text-center p-4 border border-gray-200/30 rounded-2xl hover:shadow-sm"
+          >
+            <span className="text-accent">{mode.icon}</span>
+            <h3 className="mt-4 text-xl font-semibold text-accent">
+              {mode.title}
+            </h3>
+            <p className="mt-2 text-base-content text-sm leading-relaxed">
+              {mode.description}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -56,7 +56,7 @@ const Navber = () => {
     return <GlobalLoader />;
   }
   return (
-    <div className=" bg-base-100">
+    <div className=" bg-base-100 sticky top-0 z-99">
       <div className=" w-11/12 mx-auto navbar ">
         <div className="navbar-start">
           <div className="dropdown z-999">
@@ -90,8 +90,11 @@ const Navber = () => {
                 >
                   <div className="w-10 rounded-full">
                     <img
-                      alt="Tailwind CSS Navbar component"
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                      alt={user.displayName}
+                      src={
+                        user.photoURL ||
+                        "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                      }
                     />
                   </div>
                 </div>
@@ -100,7 +103,9 @@ const Navber = () => {
                   className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-45 p-2 shadow"
                 >
                   <li>
-                    <a className="justify-between">Profile</a>
+                    <Link to="/profile" className="justify-between">
+                      Profile
+                    </Link>
                   </li>
                   <li>
                     <a>Settings</a>

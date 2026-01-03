@@ -2,26 +2,24 @@ import { Link } from "react-router-dom";
 import Loader from "./Loader";
 
 const PCard = ({ product }) => {
-  const { name, image, price, available_quantity } = product;
+  const { name, image, price, availableQuantity } = product;
 
   return (
     <div>
       {product ? (
-        <div className="card bg-base-100 w-full border border-gray-200 rounded-2xl hover:shadow-lg transition-shadow duration-300">
-          <figure className="px-10 pt-10">
-            <img
-              src={image}
-              alt="Shoes"
-              className="rounded-xl w-full h-auto aspect-2/1 object-cover border border-gray-200"
-            />
-          </figure>
-          <div className="card-body">
+        <div className="card bg-base-100 w-full border border-gray-200/40 rounded-2xl overflow-hidden hover:shadow-sm transition">
+          <img
+            src={image}
+            alt={name}
+            className="w-full h-auto aspect-2/1 object-cover hover:scale-110 cursor-pointer transition"
+          />
+          <div className="card-body p-4">
             <h2 className="card-title">
-              {name.length > 50 ? name.slice(0, 35) + " ..." : name}
+              {name.length > 20 ? name.slice(0, 20) + " ..." : name}
             </h2>
             <div className="flex gap-5">
               <h2 className="flex ">Price : ${price}</h2>
-              <h2 className="">{available_quantity} Products Available</h2>
+              <h2 className="">{availableQuantity} Products Available</h2>
             </div>
             <div className="card-actions">
               <Link to={`/details/${product._id}`}>

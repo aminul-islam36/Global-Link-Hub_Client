@@ -12,6 +12,7 @@ import AddProduct from "../Pages/AddProduct";
 import MyImport from "../Pages/MyImport";
 import ErrorPage from "../Pages/ErrorPage";
 import Blogs from "../Pages/Blogs";
+import Profile from "../Pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -56,9 +57,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/details/:id",
-        loader: ({ params }) =>
-          fetch(`https://global-link-hub.vercel.app/products/${params.id}`),
         element: <Details />,
+      },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/register",

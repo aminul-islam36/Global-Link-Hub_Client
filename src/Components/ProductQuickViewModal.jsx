@@ -36,7 +36,7 @@ const ProductQuickViewModal = ({ product, onClose }) => {
             </p>
 
             <p className="mb-1">
-              <strong>Available Quantity:</strong> {product.imported_quantity}
+              <strong>Available Quantity:</strong> {product.importQty}
             </p>
 
             <p className="mb-3">

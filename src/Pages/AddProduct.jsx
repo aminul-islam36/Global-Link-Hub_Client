@@ -17,7 +17,7 @@ const AddProduct = () => {
       price: Number(data.productPrice),
       origin_country: data.originCountry,
       rating: Number(data.rating),
-      available_quantity: Number(data.quantity),
+      availableQuantity: Number(data.quantity),
       created_At: new Date(),
       seller_email: user.email,
       description: data.textarea,

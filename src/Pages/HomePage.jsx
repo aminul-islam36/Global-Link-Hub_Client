@@ -8,10 +8,12 @@ const HomePage = () => {
   return (
     <div>
       <Hero />
-      <LatestProducts />
-      <TransportationModes />
-      <Testimonials />
-      <ContactUS />
+      <div className="px-4">
+        <LatestProducts />
+        <TransportationModes />
+        <Testimonials />
+        <ContactUS />
+      </div>
     </div>
   );
 };
