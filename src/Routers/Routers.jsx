@@ -14,6 +14,9 @@ import ErrorPage from "../Pages/ErrorPage";
 import Blogs from "../Pages/Blogs";
 import Profile from "../Pages/Profile";
 import ResetPassword from "../Pages/PasswordReset";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import MyExportGraph from "../Pages/MyExportPages/MyExportGraph";
+import MyImportGraph from "../Pages/importPages/MyImportGraph";
 
 const router = createBrowserRouter([
   {
@@ -61,20 +64,32 @@ const router = createBrowserRouter([
         element: <Details />,
       },
       {
-        path: "/profile",
-        element: (
-          <PrivateRoute>
-            <Profile />
-          </PrivateRoute>
-        ),
-      },
-      {
         path: "/register",
         element: <Register />,
       },
       {
         path: "/login",
         element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      { index: true, element: <Profile /> },
+      { path: "profile", element: <Profile /> },
+      {
+        path: "importsGraph",
+        element: <MyImportGraph />,
+      },
+      {
+        path: "exportsGraph",
+        element: <MyExportGraph />,
       },
     ],
   },

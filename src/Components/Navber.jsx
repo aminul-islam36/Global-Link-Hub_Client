@@ -103,12 +103,9 @@ const Navber = () => {
                   className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-45 p-2 shadow"
                 >
                   <li>
-                    <Link to="/profile" className="justify-between">
-                      Profile
+                    <Link to="/dashboard" className="justify-between mb-4">
+                      Dashboard
                     </Link>
-                  </li>
-                  <li>
-                    <a>Settings</a>
                   </li>
                   <li>
                     <button

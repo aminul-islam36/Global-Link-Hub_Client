@@ -10,6 +10,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../Firebase/Firebase.config";
 
@@ -40,6 +41,19 @@ const AuthProvider = ({ children }) => {
   const logOutFunc = () => {
     return signOut(auth);
   };
+  // Update user profile
+
+  const updateUserProfile = async (name, photo) => {
+    if (!auth.currentUser) return;
+
+    await updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photo,
+    });
+
+    // 🔥 Update local user state so UI updates immediately
+    setUser({ ...auth.currentUser });
+  };
 
   // Password reset email
 
@@ -63,6 +77,7 @@ const AuthProvider = ({ children }) => {
     loginWithEmailPass,
     logOutFunc,
     resetPass,
+    updateUserProfile,
     user,
     loading,
   };

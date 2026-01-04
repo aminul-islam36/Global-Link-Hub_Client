@@ -23,8 +23,10 @@
     "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.69.0",
     "react-icons": "^5.5.0",
+    "react-is": "^19.2.3",
     "react-router-dom": "^7.9.5",
     "react-toastify": "^11.0.5",
+    "recharts": "^3.6.0",
     "sweetalert2": "^11.26.3",
     "swiper": "^12.0.3"
   },
