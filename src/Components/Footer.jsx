@@ -1,4 +1,9 @@
-import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaGithub,
+  FaInstagram,
+  FaLinkedinIn,
+} from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import Logo from "./Logo";
 
@@ -25,18 +30,13 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="/products" className="hover:text-accent">
+              <a href="/all-products" className="hover:text-accent">
                 Products
               </a>
             </li>
             <li>
-              <a href="/myexport" className="hover:text-accent">
-                My Exports
-              </a>
-            </li>
-            <li>
-              <a href="/myImport" className="hover:text-accent">
-                My Imports
+              <a href="/blogs" className="hover:text-accent">
+                Blogs
               </a>
             </li>
           </ul>
@@ -47,12 +47,28 @@ const Footer = () => {
           <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
           <div className="flex space-x-4">
             <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/aminulislam368"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full bg-gray-800 hover:bg-blue-600 transition"
             >
               <FaFacebookF />
+            </a>
+            <a
+              href="https://github.com/aminul-islam36"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-full bg-gray-800 hover:bg-pink-500 transition"
+            >
+              <FaGithub />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/aminul-islam36/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-full bg-gray-800 hover:bg-blue-700 transition"
+            >
+              <FaLinkedinIn />
             </a>
             <a
               href="https://twitter.com"
@@ -62,26 +78,10 @@ const Footer = () => {
             >
               <FaXTwitter />
             </a>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-full bg-gray-800 hover:bg-pink-500 transition"
-            >
-              <FaInstagram />
-            </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-full bg-gray-800 hover:bg-blue-700 transition"
-            >
-              <FaLinkedinIn />
-            </a>
           </div>
           <p className="text-gray-500 mt-4 text-sm">
-            Email: info@globallinkhub.com <br />
-            Phone: +880 123 456 789
+            Email: mmamin2021@gmail.com <br />
+            Phone: +8801912874218
           </p>
         </div>
       </div>

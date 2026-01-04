@@ -3,6 +3,7 @@ import TransportationModes from "../Components/TransportationModes ";
 import ContactUS from "../Components/ContactUS";
 import Testimonials from "../Components/Testimonials";
 import LatestProducts from "../Components/LatestProducts";
+import FAQ from "../Components/FAQ";
 
 const HomePage = () => {
   return (
@@ -12,6 +13,7 @@ const HomePage = () => {
         <LatestProducts />
         <TransportationModes />
         <Testimonials />
+        <FAQ />
         <ContactUS />
       </div>
     </div>

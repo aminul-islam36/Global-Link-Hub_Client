@@ -52,12 +52,12 @@ const Profile = () => {
           <div className="grid grid-cols-3 gap-4 w-full my-6">
             <div className="stat bg-base-200 rounded-xl">
               <div className="stat-title text-xs">Orders</div>
-              <div className="text-sm text-accent">12</div>
+              <div className="text-sm text-accent">5</div>
             </div>
 
             <div className="stat bg-base-200 rounded-xl">
               <div className="stat-title text-xs">Products</div>
-              <div className="text-sm text-accent">8</div>
+              <div className="text-sm text-accent">4</div>
             </div>
 
             <div className="stat bg-base-200 rounded-xl">
